@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="css/fontawesome-free-5.11.2-web/css/all.css">
+    <!-- <link rel="stylesheet" href="css/fontawesome-free-5.11.2-web/css/solid.css">
+    <link rel="stylesheet" href="css/fontawesome-free-5.10.1-web/css/brands.css">  -->
+   
+
+    <link rel="stylesheet" href="css/main.css">
+    <title>The cinemas </title>
+</head>
+<body>
+    <section class="banner">
+        <div class="overlay">
+             <div class="banner-heading">
+            <h1><span>WATCH THE LATEST <br></span> <span>MOVIES ON BOX <br></span> <span>OFFICE</span></h1>
+        </div>
+
+        <div class="nav">
+            <div class="nav-brand">
+                <h3>The cinemas</h3>
+            </div>
+            <div class="nav-links">
+                <ul>
+                    <li class="nav-link"><a href="#">Home </a> </li>
+                    <li class="nav-link"><a href="#">Category</a></li>
+                    <li class="nav-link"><a href="#">Contact</a></li>
+                    <li class="nav-link"><a href="#">About</a></li>
+                </ul>
+               
+               <div class="media-icons"> 
+                   
+                   <ul>
+                       <li>
+                        <a href="#">
+                                <i class="fab fa-facebook-square"></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                                <i class="fab fa-twitter-square"></i>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="#">
+                                <i class="fab fa-google-plus-g"></i>
+                        </a>
+                      </li>
+                   </ul>
+               </div>
+            </div>
+        </div>
+       
+        </div>
+    </section>
+
+    <main>
+        <div class="overlay">
+            <div>
+                <form method="POST" action="">
+                    <input type="text" class="search-input" placeholder="Search for a movie">
+                    <button type="submit" class="search-submit">Search</button>
+                </form>
+            </div>
+        <section class="showcase">
+
+            <div class="show-item">
+                <div class="show-video-bg">
+                        <img src="img/play-button.svg" alt="play" width="100px">
+                    <div class="info">
+                        <h3>The Foreiner (2018)</h3>
+                        <p>Jackie chan</p>
+                        <span>Action, Dram</span>
+                    </div>
+                </div>
+                </div>
+           
+
+
+            <div class="coming-soon">
+                <h2 class="heading-bb">COMING SOON</h2>
+                <div class="show-item">
+                    <div class="show-video-sm com-soon-1 ">
+                            <img src="img/play-button.svg" alt="play" width="100px">
+                            <div class="info">
+                                <h3>Tomb raider</h3>
+                            </div>
+                    </div>
+                    
+                </div>
+                <div class="show-item">
+                    <div class="show-video-sm com-soon-2">
+                        <img src="img/play-button.svg" alt="play" width="100px">
+                        <div class="info">
+                            <h3>Call of Duty</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         
+            
+        
+        </section>
+
+        <section class="now-showing">
+            <h2 class="heading-bb" >NOW SHOWING</h3>
+            <div class="items">
+                <!-- <div class="item item1">
+                    <div class="info">
+                        <h3>BRAVEN</h3>
+                        <span>Action, Drama</span><span><i></i></span>
+                    </div>
+                </div>
+                <div class="item item2">
+                    <div class="info">
+                        <h3>CREED 2</h3>
+                        <span>Action, Drama</span><i></i></span>
+                    </div>
+                </div>
+                <div class="item item3">
+                    <div class="info">
+                        <h3>DEADOOL 2</h3>
+                        <span>Action, Comedy</span><i></i></span>
+                    </div>
+                </div> -->
+            </div>
+        </section>
+
+        <section id="spotlights">
+            <div ><h2 class="heading-bb">SPOTLIGHT OF THE MONTH</h2></div>
+            <div id="spotlight-items">
+   
+            </div>
+        </section>
+    </div>
+    </main>
+
+    <script src="genres.js"></script>
+    <script>
+
+       let spotlightsItems =  document.getElementById('spotlight-items');
+       let nowShowing = document.querySelector('.items')
+       let spotlight = document.querySelectorAll('.spotlight-item');
+
+        let endpoints;
+        let omdbEndpoint = 'http://www.omdbapi.com/?apikey=8de31466&s=frozen&plot=full&y=2019';
+        let apikey = '?api_key=52f3348e64a3a2a95bf810effe7627e6';
+        let genreEndpoint = 'https://api.themoviedb.org/3/genre/movie/list' + apikey;
+        let popularEndpoint = 'https://api.themoviedb.org/3/movie/popular' + apikey;
+        let nowPlayingEndpoint = 'https://api.themoviedb.org/3/movie/now_playing' + apikey;
+        let pathPrefix = 'https://image.tmdb.org/t/p/w500';
+        
+        
+
+    function getGenre(id) {
+        genres.forEach(item => {
+            if(item.id == id){
+                let str = item.name;
+                return str;
+            }
+        })
+    }
+getGenre(12);
+    fetch(nowPlayingEndpoint)
+    .then((res) => {return res.json()})
+    .then((data) => {
+       let movies = data.results;
+        console.log(movies);
+        movies.forEach(item => {
+            let posterBox = document.createElement('div');
+            let infoBox = document.createElement('div');
+            infoBox.className += 'info';
+            posterBox.className += 'item';
+            
+                let bgImg = pathPrefix + item.poster_path;
+                posterBox.style.background = `url(${bgImg})`;
+
+                infoBox.innerHTML = ` <h3>${item.title}</h3>
+                        <span>` + getGenre(item.genre_ids[0]) +` </span>`;
+               posterBox.style.backgroundSize = 'cover';
+               posterBox.appendChild(infoBox);
+                nowShowing.appendChild(posterBox); 
+            
+
+           
+       })
+
+    })
+
+
+        
+     
+
+
+
+    fetch(popularEndpoint)
+    .then((res) => {return res.json()})
+    .then((data) => {
+       let movies = data.results;
+        
+
+        movies.forEach(item => {
+            let posterBox = document.createElement('div');
+            posterBox.className = 'spotlight-item';
+            if(item.Poster != 'N/A') {
+                let bgImg = pathPrefix + item.poster_path;
+                posterBox.style.background = `url(${bgImg})`;
+                console.log()
+                posterBox.style.backgroundSize = 'cover';
+                spotlightsItems.appendChild(posterBox); 
+            }
+
+           
+       })
+
+    })
+
+    
+    </script>
+</body>
+</html>
+
+
+
